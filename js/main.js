@@ -94,6 +94,52 @@ const Menu = {
   }
 }
 
+const ImageUploader = {
+  init(){
+    this.$fileInput = $('#image-uploader')
+    this.$textarea = $('.editor textarea')
+
+    AV.init({
+      appId: "lrq81oYdxLjnI8EcPdR5QvPW-gzGzoHsz",
+      appKey: "Stl9ULTfyXhA6xTgnw03eFKl",
+      serverURL: "https://lrq81oyd.lc-cn-n1-shared.com"
+    })
+    this.bind()
+  },
+  bind(){
+    let self = this
+    this.$fileInput.onchange=function(){
+      if(this.files.length > 0) {
+        let localFile = this.files[0]
+        if(localFile.size/1048576 > 2) {
+          alert('文件不能超过2M')
+          return
+        }
+        self.insertText(`![上传中，进度0%]()`)
+        let  avFile = new AV.File(encodeURI(localFile.name), localFile)
+        avFile.save({ 
+          keepFileName: true, 
+          onprogress(progress) {
+            self.insertText(`![上传中，进度${progress.percent}%]()`)
+          }
+        }).then(file => {
+          let text = `![${file.attributes.name}](${file.attributes.url}?imageView2/0/w/800/h/400)`
+          self.insertText(text)
+        }).catch(err => console.log(err))
+      } 
+    }
+  },
+  insertText(text = '') {
+    let $textarea = this.$textarea
+    let start = $textarea.selectionStart
+    let end = $textarea.selectionEnd
+    let oldText = $textarea.value
+
+    $textarea.value = `${oldText.substring(0, start)}${text} ${oldText.substring(end)}`
+    $textarea.focus()
+    $textarea.setSelectionRange(start, start + text.length) 
+  }
+}
 
 const Editor = {
   init() {
@@ -119,7 +165,7 @@ const Editor = {
     Reveal.initialize({
           controls: true,
           progress: true,
-          center: localStorage.aligh === 'left-top' ? false : true,
+          center: localStorage.align === 'left-top' ? false : true,
           hash: true,
           transition: localStorage.transition || 'slide', // none/fade/slide/convex/concave/zoom
           // More info https://github.com/hakimel/reveal.js#dependencies
@@ -163,7 +209,7 @@ const Theme = {
     }
 
     this.$align.onchange = function() {
-      localStorage.aligh = this.value
+      localStorage.align = this.value
       location.reload()
     }
   },
@@ -182,7 +228,7 @@ const Theme = {
 
     Array.from(this.$$figures).find($figure => $figure.dataset.theme === theme).classList.add('select')
     this.$transition.value = localStorage.transition || 'slide'
-    this.$align.value = localStorage.aligh || 'center'
+    this.$align.value = localStorage.align || 'center'
     this.$reveal.classList.add(this.$align.value)
   }
 }
@@ -225,4 +271,4 @@ const App = {
 }
 
 
-App.init(Menu, Editor,Theme, Print)
+App.init(Menu, Editor,Theme, Print, ImageUploader)

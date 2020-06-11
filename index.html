@@ -21,7 +21,7 @@
 	<!-- Theme used for syntax highlighting of code -->
 	<link rel="stylesheet" href="lib/css/monokai.css">
 	<link rel="stylesheet" href="css/main.css">
-	<link rel="stylesheet" href="////at.alicdn.com/t/font_1721028_q5jqxhy3k7h.css">
+	<link rel="stylesheet" href="//at.alicdn.com/t/font_1721028_993fwsdy2bf.css">
 
 	<!-- Printing and PDF exports -->
 	<script>
@@ -31,6 +31,7 @@
 		// link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
 		// document.getElementsByTagName('head')[0].appendChild(link);
 	</script>
+
 
 	<!--[if lt IE 9]>
 		<script src="lib/js/html5shiv.js"></script>
@@ -54,6 +55,10 @@
 			<div class="content active editor">
 				<h2>内容编辑</h2>
 				<textarea ></textarea>
+				<div class="uploader">
+					<input type="file" id="image-uploader" accept="image/*">
+					<label for="image-uploader"><span class="iconfont icon-upload"></span>支持.png .jpg .gif格式，最大不超过2M</label>
+				</div>
 				<button>保存</button>
 			</div>
 			<div class="content">
@@ -134,7 +139,11 @@
 			<div class="content">
 				<h2>使用说明</h2>
 				<div class="guild">
-					<p>本软件以markdown语法为基础进行编辑,特殊的是‘#’表示第一页，‘##’表示其他主页面，‘###’表示子页面，但是需放置在相应的主页面下。
+					<p>本软件以markdown语法为基础进行编辑。<br>
+						<h5>1 分页</h5>
+						 ‘#’表示第一页<br>
+						 ‘##’表示其他主页面<br>
+						 ‘###’表示子页面，但是需放置在相应的主页面下。<br>
 						例如：<br>
 						<span>
 							“ ## 公司介绍<br>
@@ -145,6 +154,10 @@
 						但是三个以上的#表示标题<br>
 						markdow的语法规范请参考<a href="https://yinxiang.com/new/hc/articles/%e5%8d%b0%e8%b1%a1%e7%ac%94%e8%ae%b0-markdown-%e5%85%a5%e9%97%a8%e6%8c%87%e5%8d%97/?utm_source=b1&utm_medium=b1&utm_term=5cb4q">印象笔记教程</a>
 					</p>
+					<br>
+					<h5>2 上传图片</h5>
+					<p>将光标停留在需要插入图片的分页内，点击上传图片图标</p>
+					<p>删除图片：只需要删除上传图片成功后的高亮部分内容</p>
 					
 				</div>
 			</div>
@@ -157,11 +170,10 @@
 
 		</div>
 	</div>
-
+	<script src="//cdn.jsdelivr.net/npm/leancloud-storage@4.6.1/dist/av-min.js"></script>
 	<script src="js/reveal.js"></script>
-
 	<script src="js/main.js"></script>
-
+	
 </body>
 
 </html>
