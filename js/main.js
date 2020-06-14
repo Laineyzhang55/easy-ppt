@@ -145,7 +145,7 @@ const Editor = {
   init() {
     this.$editInput = $('.editor textarea')
     this.$saveBtn = $('.editor button')
-    this.markdown = localStorage.markdown || `# One Slide`
+    this.markdown = localStorage.markdown || `# 三分钟PPT`
     this.$slideContainer = $('.slides')
 
     this.bind()
